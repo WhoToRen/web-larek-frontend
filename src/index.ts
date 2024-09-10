@@ -4,6 +4,8 @@ import './scss/styles.scss';
 type orderUserData = Pick<IOrder, 'email' | 'phone'>;
 type orderDelivery = Pick<IOrder, 'payment' | 'address'>; 
 type itemCategoryType = | 'софт-скил' | 'другое' | 'дополнительное' | 'кнопка' | 'хард-скил';
+type paymentMethod = 'cash' | 'card';
+
 
 // юзер-апи
 export interface IUserAPI {
@@ -31,7 +33,7 @@ export interface IBasket {
 export interface IOrder {
 	address: string;
 	phone: string;
-	payment: string;
+	payment: paymentMethod;
 	email: string;
 	total: number;
 	items: string[]
