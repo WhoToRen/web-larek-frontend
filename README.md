@@ -53,6 +53,7 @@ yarn build
 Абстрактный класс, определяющий основные методы и свойства для всех компонентов приложения.
 
 **Конструктор**: element: HTMLElement
+
 **Методы:**
 - toogleClass - переключить класс у элемента
 - addClass - добавить класс элементу
@@ -66,6 +67,7 @@ yarn build
 ## 2. EventEmitter
 
 Класс, отвечающий за работу с событиями в приложении. Позволяет устанавливать и снимать слушатели.
+
 **Конструктор:** new Map
 
 **Методы:**
@@ -79,15 +81,20 @@ yarn build
 ## 3. Model
 
 Базовый класс для создания классов моделей.
+
 **Конструктор**: data: Partial<T>, protected events: IEvents
+
 **Свойства:** events
+
 **Методы:**
 - emitChanges - извещение об изменении
 
 ## 4. API
 
 Базовый класс для взаимодействия с API сервера, предоставляющий методы для выполнения HTTP-запросов.
+
 **Конструктор:** baseUrl: string, options: RequestInit
+
 **Методы:**
 get() - выполнить GET-запрос.
 post() - выполнить POST-запрос.
@@ -99,8 +106,11 @@ delete() - выполнить DELETE-запрос.
 ## 1. Page
 
 Класс для отображения страницы.
+
 **Конструктор:** HTMLElement, events: IEvents
+
 **Свойства:** catalog, basketIcon, basketCounter, modalContainer
+
 **Методы:**
 - set catalog - добавить товары на страницу
 - set basketCounter - добавить счетчик к иконке корзины
@@ -108,7 +118,9 @@ delete() - выполнить DELETE-запрос.
 ## 2. Modal
 
 Класс, отвечающий за отображение модальных окон и взаимодействие с ними (открытие и закрытие). Наследует абстрактный класс Component.
+
 **Конструктор:** events: IEvents
+
 **Методы:**
 open() - открыть модальное окно.
 close() - закрыть модальное окно.
@@ -117,8 +129,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 3. Basket
 
 Класс для корзины.
+
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
+
 **Свойства:** getTotalPrice, itemList, buttonBasket
+
 **Методы:**
 - set itemList - установить список товаров
 - set totalPrice - установить общую сумму
@@ -126,8 +141,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 4. Card
 
 Класс для карточки товара.
+
 **Конструктор:** constructor(element: HTMLElement, eventEmitter: EventEmitter)
+
 **Свойства:** id, category, name, image, description, price, button
+
 **Методы:**
 - set id - установить id
 - set category - установить категорию товара
@@ -140,8 +158,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 5. Order
 
 Класс для заказа.
+
 **Конструктор:** HTMLFormElement, events: EventEmitter
+
 **Свойства:** cashButton, onlineButton, adressInput
+
 **Методы:**
 - set paymentMethod - установить способ оплаты
 - set address - установить адрес
@@ -150,8 +171,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 6. UserInfo
 
 Класс для пользовательских данных (почта и номер телефона).
+
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
+
 **Свойства:** email, phone
+
 **Методы:**
 - set email - установить имейл
 - set phone - установить номер телефона
@@ -159,8 +183,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 7. FormValidation
 
 Класс для проверки валидации форм.
+
 **Конструктор:** HTMLFormElement, events: EventEmitter
+
 **Свойства:** inputName, submit, errors
+
 **Методы:**
 - set valid - проверить на валидность формы
 - set errors - установить ошибку
@@ -168,8 +195,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 8. OrderConfirmation
 
 Класс для подверждения успешного заказа.
+
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
+
 **Свойства:** title, description, closeButton
+
 **Методы:**
 - set title - текст с подтверждением заказа
 - set description - текст с общей стоимостью
@@ -179,8 +209,11 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 1. Data
 
 Класс для управления данными приложения.
+
 **Конструктор:** events: IEvents
+
 **Свойства:** item, itemsList, basket, order
+
 **Методы:**
 - setItems - получить каталог товаров
 - selectItem - выбрать товар
@@ -196,7 +229,9 @@ set content(value: HTMLElement) - установить содержимое мо
 ## 1. UseAPI
 
 Класс для получения данных с сервера.
+
 **Конструктор:** baseUrl: string, options?: RequestInit
+
 **Методы:**
 - getItemsList - получить список доступных товаров
 - makeOrder - сделать заказ
