@@ -238,16 +238,16 @@ set content(value: HTMLElement) - установить содержимое мо
 
 # События в приложении:
 
-MODAL_OPEN = 'modal:open' - открытие модального окна
-MODAL_CLOSE = 'modal:close' - закрытие модального окна
-BASKET_ADD = 'basket:add' - добавление товара в корзину
-BASKET_REMOVE = 'basket:remove' -  удаление товара из корзины
-BASKET_CLEAR = 'basket:clear' - очистка корзины
-BASKET_CHANGED = 'basket:changed' - изменения в корзине
-ITEM_SELECTED = 'item:selected' - выбранный товар
-ORDER_CREATE = 'order:create' - создание нового заказа
-ORDER_CONFIRM = 'order:confirm' - подтверждение заказа
-ORDER_CLEAR = 'order:clear' - очищение заказа
-FORM_ERROR = 'form:error' - ошибка в форме
-FORM_SUBMIT = 'form:submit' - отправка формы
-INPUT_CHANGE = 'input:change' - изменение данных
+- MODAL_OPEN = 'modal:open' - открытие модального окна
+- MODAL_CLOSE = 'modal:close' - закрытие модального окна
+- BASKET_ADD = 'basket:add' - добавление товара в корзину
+- BASKET_REMOVE = 'basket:remove' -  удаление товара из корзины
+- BASKET_CLEAR = 'basket:clear' - очистка корзины
+- BASKET_CHANGED = 'basket:changed' - изменения в корзине
+- ITEM_SELECTED = 'item:selected' - выбранный товар
+- ORDER_CREATE = 'order:create' - создание нового заказа
+- ORDER_CONFIRM = 'order:confirm' - подтверждение заказа
+- ORDER_CLEAR = 'order:clear' - очищение заказа
+- FORM_ERROR = 'form:error' - ошибка в форме
+- FORM_SUBMIT = 'form:submit' - отправка формы
+- INPUT_CHANGE = 'input:change' - изменение данных
