@@ -1,14 +1,14 @@
-## Проектная работа "Веб-ларек"
+# Проектная работа "Веб-ларек"
 
 Стек: HTML, SCSS, TS, Webpack
 
-# Структура проекта:
+## Структура проекта:
 
 - src/ — исходные файлы проекта
 - src/components/ — папка с JS компонентами
 - src/components/base/ — папка с базовым кодом
 
-# Важные файлы:
+## Важные файлы:
 
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
@@ -46,9 +46,9 @@ yarn build
 
 ```
 
-## Базовые классы
+# Базовые классы
 
-# 1. Component
+## 1. Component
 
 Абстрактный класс, определяющий основные методы и свойства для всех компонентов приложения.
 
@@ -63,7 +63,7 @@ yarn build
 - showElement - показать элемент
 - render - рендер
 
-# 2. EventEmitter
+## 2. EventEmitter
 
 Класс, отвечающий за работу с событиями в приложении. Позволяет устанавливать и снимать слушатели.
 **Конструктор:** new Map
@@ -75,7 +75,7 @@ yarn build
 - offAll - удалить слушатель со всех событий
 - trigger - вернуть функцию, инициирующую заданное событие
 
-# 3. Model
+## 3. Model
 
 Базовый класс для создания классов моделей.
 **Конструктор**: data: Partial<T>, protected events: IEvents
@@ -83,7 +83,7 @@ yarn build
 **Методы:**
 - emitChanges - извещение об изменении
 
-# 4. API
+## 4. API
 
 Базовый класс для взаимодействия с API сервера, предоставляющий методы для выполнения HTTP-запросов.
 **Конструктор:** baseUrl: string, options: RequestInit
@@ -93,9 +93,9 @@ post() - выполнить POST-запрос.
 put() - выполнить PUT-запрос.
 delete() - выполнить DELETE-запрос.
 
-## Слой представления
+# Слой представления
 
-# 1. Page
+## 1. Page
 
 Класс для отображения страницы.
 **Конструктор:** HTMLElement, events: IEvents
@@ -104,7 +104,7 @@ delete() - выполнить DELETE-запрос.
 - set catalog - добавить товары на страницу
 - set basketCounter - добавить счетчик к иконке корзины
 
-# 2. Modal
+## 2. Modal
 
 Класс, отвечающий за отображение модальных окон и взаимодействие с ними (открытие и закрытие). Наследует абстрактный класс Component.
 **Конструктор:** events: IEvents
@@ -113,7 +113,7 @@ open() - открыть модальное окно.
 close() - закрыть модальное окно.
 set content(value: HTMLElement) - установить содержимое модального окна.
 
-# 3. Basket
+## 3. Basket
 
 Класс для корзины.
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
@@ -122,7 +122,7 @@ set content(value: HTMLElement) - установить содержимое мо
 - set itemList - установить список товаров
 - set totalPrice - установить общую сумму
 
-# 4. Card
+## 4. Card
 
 Класс для карточки товара.
 **Конструктор:** constructor(element: HTMLElement, eventEmitter: EventEmitter)
@@ -136,7 +136,7 @@ set content(value: HTMLElement) - установить содержимое мо
 - set price - установить цену товара
 - set button - установить текст для кнопки
 
-# 5. Order
+## 5. Order
 
 Класс для заказа.
 **Конструктор:** HTMLFormElement, events: EventEmitter
@@ -146,7 +146,7 @@ set content(value: HTMLElement) - установить содержимое мо
 - set address - установить адрес
 - changePayment - изменить способ оплаты
 
-# 6. UserInfo
+## 6. UserInfo
 
 Класс для пользовательских данных (почта и номер телефона).
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
@@ -155,7 +155,7 @@ set content(value: HTMLElement) - установить содержимое мо
 - set email - установить имейл
 - set phone - установить номер телефона
 
-# 7. FormValidation
+## 7. FormValidation
 
 Класс для проверки валидации форм.
 **Конструктор:** HTMLFormElement, events: EventEmitter
@@ -164,7 +164,7 @@ set content(value: HTMLElement) - установить содержимое мо
 - set valid - проверить на валидность формы
 - set errors - установить ошибку
 
-# 8. OrderConfirmation
+## 8. OrderConfirmation
 
 Класс для подверждения успешного заказа.
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
@@ -173,9 +173,9 @@ set content(value: HTMLElement) - установить содержимое мо
 - set title - текст с подтверждением заказа
 - set description - текст с общей стоимостью
 
-## Слой данных
+# Слой данных
 
-# 1. Data
+## 1. Data
 
 Класс для управления данными приложения.
 **Конструктор:** events: IEvents
@@ -190,9 +190,9 @@ set content(value: HTMLElement) - установить содержимое мо
 - getOrder - создать заказ
 - clearOrder - очистить заказ
 
-## Слой коммуникации
+# Слой коммуникации
 
-# 1. UseAPI
+## 1. UseAPI
 
 Класс для получения данных с сервера.
 **Конструктор:** baseUrl: string, options?: RequestInit
@@ -200,7 +200,7 @@ set content(value: HTMLElement) - установить содержимое мо
 - getItemsList - получить список доступных товаров
 - makeOrder - сделать заказ
 
-## События в приложении:
+# События в приложении:
 
 MODAL_OPEN = 'modal:open' - открытие модального окна
 MODAL_CLOSE = 'modal:close' - закрытие модального окна
