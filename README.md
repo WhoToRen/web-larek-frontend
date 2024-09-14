@@ -147,7 +147,7 @@ delete() - выполнить DELETE-запрос.
 
 Класс для отображения страницы.
 **Конструктор:** HTMLElement, events: IEvents
-**Свойства:** catalog, basketIcon, basketCounter, modalContainer
+**Свойства:** catalog, basket, basketCounter, wrapper
 =======
 # Слой представления
 
@@ -164,40 +164,20 @@ delete() - выполнить DELETE-запрос.
 - set catalog - добавить товары на страницу
 - set basketCounter - добавить счетчик к иконке корзины
 
-<<<<<<< HEAD
 # 2. Modal
 
 Класс, отвечающий за отображение модальных окон и взаимодействие с ними (открытие и закрытие). Наследует абстрактный класс Component.
 **Конструктор:** events: IEvents
-=======
-## 2. Modal
-
-Класс, отвечающий за отображение модальных окон и взаимодействие с ними (открытие и закрытие). Наследует абстрактный класс Component.
-
-**Конструктор:** events: IEvents
-
->>>>>>> 51fd3a13b5e7003e2192aec8c45fad5d78e630f7
 **Методы:**
 open() - открыть модальное окно.
 close() - закрыть модальное окно.
 set content(value: HTMLElement) - установить содержимое модального окна.
 
-<<<<<<< HEAD
 # 3. Basket
 
 Класс для корзины.
 **Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
 **Свойства:** getTotalPrice, itemList, buttonBasket
-=======
-## 3. Basket
-
-Класс для корзины.
-
-**Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
-
-**Свойства:** getTotalPrice, itemList, buttonBasket
-
->>>>>>> 51fd3a13b5e7003e2192aec8c45fad5d78e630f7
 **Методы:**
 - set itemList - установить список товаров
 - set totalPrice - установить общую сумму
