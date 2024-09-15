@@ -520,5 +520,6 @@ export type orderUserData = Pick<IOrder, 'email' | 'phone'>;
 export type orderDelivery = Pick<IOrder, 'payment' | 'address'>;
 export type paymentMethod = 'online' | 'cash'; 
 export type IBasketView = Pick<IProduct, 'id' | 'title' | 'price'>;
+export type ListItem = { index: number; }
 
 ```
