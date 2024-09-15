@@ -443,17 +443,6 @@ interface IBasket {
 
 ```
 
-Интерфейс каталога: 
-
-```
-
-interface IProductList<T> {
-	items: T[];
-	total: number;
-}
-
-```
-
 Интерфейс данных: 
 
 ```
