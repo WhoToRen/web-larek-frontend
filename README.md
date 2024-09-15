@@ -52,229 +52,469 @@ yarn build
 
 Абстрактный класс, определяющий основные методы и свойства для всех компонентов приложения.
 
-**Конструктор**: element: HTMLElement
+**Конструктор**: constructor(protected readonly container: HTMLElement)
 
 **Методы:**
-- toogleClass - переключить класс у элемента
-- addClass - добавить класс элементу
-- removeClass - удалить класс у элемента
-- setTextContent - установить текстовое содержимое элемента
-- setImage - установить изображение
-- hideElement - скрыть элемент
-- showElement - показать элемент
-- render - рендер
+- protected setText(element: HTMLElement, value: unknown) - установка текста
+
+- setDisabled(element: HTMLElement, state: boolean) - блокировка 
+
+- setHidden(element: HTMLElement) - скрыть элемент
+
+- setVisible(element: HTMLElement) - показать элемент
+
+- setImage(element: HTMLImageElement, src: string, alt?: string) - установить изображение
+
+- render(data?: Partial<T>): HTMLElement - рендер
 
 ## 2. EventEmitter
 
 Класс, отвечающий за работу с событиями в приложении. Позволяет устанавливать и снимать слушатели.
 
-**Конструктор:** new Map
+**Конструктор:** this._events = new Map<EventName, Set<Subscriber>>();
 
 **Методы:**
-- on - добавить слушатель события
-- off - удалить слушатель события
-- emit - вызывает событие
-- onAll - добавить слушатель на все события
-- offAll - удалить слушатель со всех событий
-- trigger - вернуть функцию, инициирующую заданное событие
+- on<T extends object>(eventName: EventName, callback: (event: T) => void) - добавить слушатель события
+- off(eventName: EventName, callback: Subscriber) - удалить слушатель события
+- emit<T extends object>(eventName: string, data?: T) - инициировать событие с данными
+- onAll(callback: (event: EmitterEvent) => void) - слушать все события
+-  offAll() - сбросить все обработчики
+- trigger<T extends object>(eventName: string, context?: Partial<T>) - вернуть функцию, инициирующую заданное событие
 
 ## 3. Model
 
-Базовый класс для создания классов моделей.
+Базовый абстрактный класс для создания классов моделей.
 
-**Конструктор**: data: Partial<T>, protected events: IEvents
-
-**Свойства:** events
+**Конструктор**: constructor(data: Partial<T>, protected events: IEvents)
 
 **Методы:**
-- emitChanges - извещение об изменении
+- emitChanges(event: string, payload?: object) - сообщить всем, что модель поменялась
 
 ## 4. API
 
 Базовый класс для взаимодействия с API сервера, предоставляющий методы для выполнения HTTP-запросов.
 
-**Конструктор:** baseUrl: string, options: RequestInit
+**Конструктор:**  constructor(baseUrl: string, options: RequestInit = {})
+
+**Свойства:** 
+
+- baseUrl: string;
+- options: RequestInit;
 
 **Методы:**
-get() - выполнить GET-запрос.
-post() - выполнить POST-запрос.
-put() - выполнить PUT-запрос.
-delete() - выполнить DELETE-запрос.
+- get(uri: string) - get-запрос. 
+- post(uri: string, data: object, method: ApiPostMethods = 'POST') - post-запрос.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## Слой представления
-
-# 1. Page
-
-Класс для отображения страницы.
-**Конструктор:** HTMLElement, events: IEvents
-**Свойства:** catalog, basket, basketCounter, wrapper
-=======
-=======
->>>>>>> 959bc451029a4b5e593475e60678a4aeac4fad14
-# Слой представления
 
 ## 1. Page
 
 Класс для отображения страницы.
 
-**Конструктор:** HTMLElement, events: IEvents
+**Конструктор:** constructor(container: HTMLElement, protected events: IEvents)
 
-**Свойства:** catalog, basketIcon, basketCounter, modalContainer
+**Свойства:** 
 
-**Методы:**
-- set catalog - добавить товары на страницу
-- set basketCounter - добавить счетчик к иконке корзины
+- _basketCounter: HTMLElement;
+- _catalog: HTMLElement;
+- _basket: HTMLElement;
+- _wrapper: HTMLElement;
 
-<<<<<<< HEAD
-# 2. Modal
+**Методы** 
 
-Класс, отвечающий за отображение модальных окон и взаимодействие с ними (открытие и закрытие). Наследует абстрактный класс Component.
-**Конструктор:** events: IEvents
-=======
+- set catalog(catalog: HTMLElement[]) - установить каталог товаров
+- set locked(value: boolean) - заблокировать страницу
+- set basketCounter(value: number) - установить счетчик на корзину
+
 ## 2. Modal
 
 Класс, отвечающий за отображение модальных окон и взаимодействие с ними (открытие и закрытие). Наследует абстрактный класс Component.
 
-**Конструктор:** events: IEvents
+**Конструктор:** constructor(container: HTMLElement, protected events: IEvents)
 
->>>>>>> 959bc451029a4b5e593475e60678a4aeac4fad14
+**Свойства**: 
+
+- _closeButton: HTMLButtonElement - кнопка для закрытия
+- _content: - содержимое модального окна
+
 **Методы:**
-open() - открыть модальное окно.
-close() - закрыть модальное окно.
-set content(value: HTMLElement) - установить содержимое модального окна.
+- open() - открыть модальное окно.
+- close() - закрыть модальное окно.
+- set content(value: HTMLElement) - установить содержимое модального окна.
 
-<<<<<<< HEAD
-# 3. Basket
 
-Класс для корзины.
-**Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
-**Свойства:** getTotalPrice, itemList, buttonBasket
-=======
 ## 3. Basket
 
 Класс для корзины.
 
-**Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
+**Конструктор:** constructor(container: HTMLElement, protected events: IEvents)
 
-**Свойства:** getTotalPrice, itemList, buttonBasket
+**Свойства:** 
 
->>>>>>> 959bc451029a4b5e593475e60678a4aeac4fad14
+- _list: HTMLElement - список товаров в корзине
+- _total: HTMLElement - общая стоимость
+- _button: HTMLButtonElement - кнопка
+
 **Методы:**
-- set itemList - установить список товаров
-- set totalPrice - установить общую сумму
+- set products(products: HTMLElement[]) - установить список товаров
+- set total(total: number) - установить общую сумму
 
-## 4. Card
+## 4. Product
 
 Класс для карточки товара.
 
 **Конструктор:** constructor(element: HTMLElement, eventEmitter: EventEmitter)
 
-**Свойства:** id, category, name, image, description, price, button
+**Свойства:** 
+- _image: HTMLImageElement - изображение
+- _title: HTMLElement - название
+- _category: HTMLElement - категория 
+- _price: HTMLElement - цена
+- _button: HTMLButtonElement - кнопка
 
 **Методы:**
-- set id - установить id
-- set category - установить категорию товара
-- set name - установить наименование товара
-- set image - установить фото товара
-- set description - установить описание товара
-- set price - установить цену товара
-- set button - установить текст для кнопки
 
-## 5. Order
+- set image(value: string) - установит изображение
+- set title(value: string) - установить название
+- set price(value: number) - установить цену 
+- set category(category: string) - установить категорию
+- set status(status: boolean) - установить статус, если товар бесценен 
+
+## 5. ProductViewModal 
+
+Подкласс для отображения товара в модальном окне. 
+
+**Конструктор**: constructor(container: HTMLElement, actions: IProductActions)
+
+**Свойства:** _description: HTMLElement - описание товара
+
+**Методы:** set description(value: string) - установить описание
+
+
+## 6. ProductInBasketView 
+
+Подкласс для отображения товара в корзине. 
+
+**Конструктор**: constructor(container: HTMLElement, actions: IProductActions)
+
+**Свойства:**
+
+- index: HTMLElement - индекс товара
+- _price: HTMLElement - цена товара 
+- _title: HTMLElement - название товара
+- _button: HTMLButtonElement - кнопка
+
+**Методы:** set description(value: string) - установить описание
+
+- set index(value: string) - установить индекс
+- set price(value: string) - установить цену
+- set title(value: string) - установить текст
+
+
+## 7. Order 
 
 Класс для заказа.
 
-**Конструктор:** HTMLFormElement, events: EventEmitter
+**Конструктор**: constructor(container: HTMLElement, actions: IProductActions)
 
-**Свойства:** cashButton, onlineButton, adressInput
+**Свойства:**
 
-**Методы:**
-- set paymentMethod - установить способ оплаты
-- set address - установить адрес
-- changePayment - изменить способ оплаты
+- index: HTMLElement - индекс товара
+- _price: HTMLElement - цена товара 
+- _title: HTMLElement - название товара
+- _button: HTMLButtonElement - кнопка
 
-## 6. UserInfo
+**Методы:** set description(value: string) - установить описание
 
-Класс для пользовательских данных (почта и номер телефона).
+- set index(value: string) - установить индекс
+- set price(value: string) - установить цену
+- set title(value: string) - установить текст
 
-**Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
 
-**Свойства:** email, phone
+## 7. OrderForm 
 
-**Методы:**
-- set email - установить имейл
-- set phone - установить номер телефона
+Класс для заказа.
 
-## 7. FormValidation
+**Конструктор:** constructor(
+    protected blockName: string,
+    container: HTMLFormElement,
+    protected events: IEvents
+  )
 
-Класс для проверки валидации форм.
+**Свойства:** 
 
-**Конструктор:** HTMLFormElement, events: EventEmitter
+_card: HTMLButtonElement - для оплаты по карте
+_cash: HTMLButtonElement - для оплаты наличкой
+_address: HTMLInputElement - для установки адреса
 
-**Свойства:** inputName, submit, errors
+## 8. OrderConfirmationView
 
-**Методы:**
-- set valid - проверить на валидность формы
-- set errors - установить ошибку
+Класс для оповещения об успешном заказе. 
 
-## 8. OrderConfirmation
+**Конструктор:** (container: HTMLFormElement, actions: IConfirmationActions)
 
-Класс для подверждения успешного заказа.
+**Свойства:** 
 
-**Конструктор:** element: HTMLElement, eventEmitter: EventEmitter
+- _close: HTMLElement - закрыть окно после успешного заказа
+- _title: HTMLElement - заголовок
+- _description: HTMLElement - описание
+- total: any - общая сумма покупки
 
-**Свойства:** title, description, closeButton
+**Методы**:
 
-**Методы:**
-- set title - текст с подтверждением заказа
-- set description - текст с общей стоимостью
+- set title(value: string) - установить заголовок
+- set description(value: string) - установить описание
+
 
 # Слой данных
 
-## 1. Data
+## 1. AppData
 
 Класс для управления данными приложения.
 
-**Конструктор:** events: IEvents
+**Конструктор:** constructor(
+		data: Partial<IAppData>,
+		protected events: IEvents,
+		items: IProduct[],
+		basket: IProduct[],
+		order: IOrder
+	)
 
-**Свойства:** item, itemsList, basket, order
+**Свойства:** 
+
+- catalog: IProduct[] - каталог
+- basket: IProduct[] - корзина
+- order: IOrder = {
+		payment: 'online',
+		address: '',
+		email: '',
+		phone: '',
+		total: 0,
+		items: [],
+	} - заказ
+- selectedProduct: string | null - выбранный товар
+- formErrors: FormErrors = {} - ошибки в форме
+- items: any - товары 
 
 **Методы:**
-- setItems - получить каталог товаров
-- selectItem - выбрать товар
-- isBasketEpmty - проверить, пуста ли корзина
-- addToBasket - добавить в корзину
-- deleteFromBasket - удалить из корзины
-- clearBasket - очистить корзину
-- getOrder - создать заказ
-- clearOrder - очистить заказ
+
+- setCatalog(items: IProduct[]) - установить каталог
+- getCatalog() - получить каталог
+- getBasket() - получить корзину
+- addProductToBasket(product: IProduct) - добавить товар в корзину
+- removeProductFromBasket(product: IProduct) - убрать товар из корзины
+- getTotalPrice(): number - получть общую стоимость
+- clearBasket() - очистить корзину
+- getOrder() - получить заказ
+- isFirstFormFill() - проверка, заполнена ли форма
+- setOrderField(field: keyof IOrderForm, value: string) - установить поле для заполнения 
+- clearOrder() - очистить заказ
+- validateOrder(field: keyof IOrder) - валидация форм
+
+
+## 2. Form
+
+Класс для формы. 
+
+**Конструктор:** (protected container: HTMLFormElement, protected events: IEvents)
+
+**Свойства**: 
+
+- _submit: HTMLButtonElement - отправка формы
+- _errors: HTMLElement - ошибки в форме
+
+**Методы:**
+
+- set valid(value: boolean) - установить валидность формы
+- set errors(value: string) - установить ошибки формы
+- 
+
+  ## 3. ContactsForm
+
+Класс для контактных данных формы.
+
+**Конструктор:** constructor(container: HTMLFormElement, protected events: IEvents)
+
+**Свойства**: 
+
+- _inputPhone: HTMLInputElement - поле ввода телефона
+- _inputEmail: HTMLInputElement - поле ввода почты
+  
+**Методы:**
+
+- set inputPhone(value: string) - ввести номер телефона
+- set inputEmail(value: string) - ввести почту
+- clearForm() - очистить форму
 
 # Слой коммуникации
 
-## 1. UseAPI
+## 1. AppApi
 
 Класс для получения данных с сервера.
 
-**Конструктор:** baseUrl: string, options?: RequestInit
+**Конструктор:** constructor(cdn: string, baseUrl: string, options?: RequestInit)
 
 **Методы:**
-- getItemsList - получить список доступных товаров
-- makeOrder - сделать заказ
 
-# События в приложении:
+- getProducts(): Promise<IProductList<IProduct>> - получить каталог товаров 
+- createOrder(order: IOrder): - создать заказ
 
-- MODAL_OPEN = 'modal:open' - открытие модального окна
-- MODAL_CLOSE = 'modal:close' - закрытие модального окна
-- BASKET_ADD = 'basket:add' - добавление товара в корзину
-- BASKET_REMOVE = 'basket:remove' -  удаление товара из корзины
-- BASKET_CLEAR = 'basket:clear' - очистка корзины
-- BASKET_CHANGED = 'basket:changed' - изменения в корзине
-- ITEM_SELECTED = 'item:selected' - выбранный товар
-- ORDER_CREATE = 'order:create' - создание нового заказа
-- ORDER_CONFIRM = 'order:confirm' - подтверждение заказа
-- ORDER_CLEAR = 'order:clear' - очищение заказа
-- FORM_ERROR = 'form:error' - ошибка в форме
-- FORM_SUBMIT = 'form:submit' - отправка формы
-- INPUT_CHANGE = 'input:change' - изменение данных
+# События в приложении (AppEvents):
+
+- MODAL_OPEN = 'modal:open',
+- MODAL_CLOSE = 'modal:close',
+- BASKET_OPEN = 'basket:open',
+- BASKET_ADD = 'basket:add',
+- PRODUCTS_CHANGED = 'products:changed',
+- PRODUCT_PREVIEW = 'product:preview',
+- PRODUCT_DELETE = 'product:delete',
+- FORM_USERDATA_SUBMIT = 'form-userdata:submit',
+- BASKET_CLEAR = 'basket:clear',
+- BASKET_CHANGED = 'basket:changed',
+- ITEM_SELECTED = 'item:selected',
+- ORDER_OPEN = 'order:open',
+- ORDER_CONFIRM = 'order:confirm',
+- FORM_ERRORS_CHANGED = 'form:errors-changed',
+- ORDER_CLEAR = 'order:clear',
+- FORM_ERROR = 'form:error',
+- FORM_SUBMIT = 'form:submit',
+- CONTACTS_SUBMIT = 'contacts:submit',
+- INPUT_CHANGE = 'input:change',
+- SET_PAYMENT_TYPE = 'order: set_peyment-type',
+
+
+# Интерфейсы в приложении: 
+
+Интерфейс страницы:
+
+```
+
+interface IPage {
+	basketCounter: number;
+	products: HTMLElement[];
+	locked: boolean;
+}
+
+```
+
+Интерфейс формы заказа: 
+
+```
+
+interface IOrderForm {
+	payment: string;
+	address: string;
+	email: string;
+	phone: string;
+}
+
+```
+
+Интерфейс товара: 
+
+```
+
+interface IProduct {
+	selected: boolean;
+	id: string;
+	description?: string;
+	image: string;
+	title: string;
+	category: string;
+	price: number | null;
+}
+
+```
+
+Интерфейс корзины: 
+
+```
+
+interface IBasket {
+	products: HTMLElement[];
+	total: number;
+	resetBasket(): void;
+}
+
+```
+
+Интерфейс каталога: 
+
+```
+
+interface IProductList<T> {
+	items: T[];
+	total: number;
+}
+
+```
+
+Интерфейс данных: 
+
+```
+
+interface IAppData {
+	catalog: IProduct[];
+	basket: IProduct[];
+	order: IOrder;
+	clearBasket(): void;
+}
+
+```
+Интерфейс данных заказа: 
+
+```
+
+interface IOrder {
+	address: string;
+	phone: string;
+	payment: string;
+	email: string;
+	total: number;
+	items: string[];
+}
+
+```
+
+Интерфейс результата заказа: 
+
+```
+
+interface IOrderResult {
+	total: any;
+	error: any;
+	id: string;
+	status: 'success' | 'error';
+	message?: string;
+}
+
+```
+
+Интерфейс карточки товара: 
+
+```
+
+interface IProductView {
+	id: string;
+	description: string;
+	image: string;
+	title: string;
+	category: string;
+	price: string;
+	button: string;
+	status: boolean;
+}
+
+```
+
+# Типы данных в приложении: 
+
+```
+
+export type orderUserData = Pick<IOrder, 'email' | 'phone'>;
+export type orderDelivery = Pick<IOrder, 'payment' | 'address'>;
+export type paymentMethod = 'online' | 'cash'; 
+export type ListItem = { index: number };
+export type IBasketView = Pick<IProduct, 'id' | 'title' | 'price'>;
+
+```
