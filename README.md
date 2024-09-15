@@ -13,7 +13,7 @@
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
 - src/index.ts — точка входа приложения
-- src/styles/styles.scss — корневой файл стилей
+- src/scss/styles.scss — корневой файл стилей
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
 
@@ -32,6 +32,11 @@ npm run start
 yarn
 yarn start
 ```
+
+## Об архитектуре 
+
+Взаимодействия внутри приложения происходят через события. Модели инициализируют события, слушатели событий в основном коде выполняют передачу данных компонентам отображения, а также вычислениями между этой передачей, и еще они меняют значения в моделях.
+
 
 ## Сборка
 
@@ -104,6 +109,7 @@ yarn build
 **Методы:**
 - get(uri: string) - get-запрос. 
 - post(uri: string, data: object, method: ApiPostMethods = 'POST') - post-запрос.
+- handleResponse(response: Response) - обработка ответа
 
 ## Слой представления
 
@@ -354,6 +360,11 @@ _address: HTMLInputElement - для установки адреса
 
 **Конструктор:** constructor(cdn: string, baseUrl: string, options?: RequestInit)
 
+**Свойства:**
+
+- cdn: string - изображение
+- items: IProduct[] - товар
+
 **Методы:**
 
 - getProducts(): Promise<IProductList<IProduct>> - получить каталог товаров 
@@ -438,17 +449,6 @@ interface IBasket {
 
 ```
 
-Интерфейс каталога: 
-
-```
-
-interface IProductList<T> {
-	items: T[];
-	total: number;
-}
-
-```
-
 Интерфейс данных: 
 
 ```
@@ -514,7 +514,7 @@ interface IProductView {
 export type orderUserData = Pick<IOrder, 'email' | 'phone'>;
 export type orderDelivery = Pick<IOrder, 'payment' | 'address'>;
 export type paymentMethod = 'online' | 'cash'; 
-export type ListItem = { index: number };
 export type IBasketView = Pick<IProduct, 'id' | 'title' | 'price'>;
+export type ListItem = { index: number; }
 
 ```
