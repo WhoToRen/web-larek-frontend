@@ -7,7 +7,7 @@ import { ensureElement } from '../utils/utils';
 import { Component } from './base/component';
 
 interface IProductActions {
-	onClick: (event: MouseEvent) => void; 
+	onClick: (event: MouseEvent) => void;
 }
 
 export class ProductView extends Component<IProductView> {
@@ -47,28 +47,20 @@ export class ProductView extends Component<IProductView> {
 		this.setText(this._price, value);
 	}
 
-	set category(category: string) {
-		this._category.textContent = category;
-		const categoryClass = 'card__category'
-
-		switch (category) {
-			case 'софт-скил':
-				this._category.classList.add(`${categoryClass}_soft`)
-				return
-			case 'другое':
-				this._category.classList.add(`${categoryClass}_other`)
-				return
-			case 'дополнительное':
-				this._category.classList.add(`${categoryClass}_additional`)
-				return
-			case 'хард-скил':
-				this._category.classList.add(`${categoryClass}_hard`)
-				return
-			case 'кнопка':
-				this._category.classList.add(`${categoryClass}_button`)
-				return
-		}
-	}
+	protected _categoryColor = <Record<string, string>> { // описания категории
+		"софт-скил": "soft",
+		"другое": "other",
+		"дополнительное": "additional",
+		"кнопка": "button",
+		"хард-скил": "hard"
+	  }
+	
+	
+	  // метод установки содержимой категории
+	  set category(value: string) {
+		this.setText(this._category, value);
+		this.toggleClass(this._category, `card__category_${this._categoryColor[value]}`, true)
+	  }
 
 	set status(status: boolean) {
 		if (this._button) {
@@ -118,8 +110,9 @@ export class ProductInBasketView extends Component<IBasketView | ListItem> {
 	}
 
 	set price(value: string) {
-		this.setText(this._price, value);
+		this.setText(this._price, `${value} синапсов`);
 	}
+	
 
 	set title(value: string) {
 		this.setText(this._title, value);

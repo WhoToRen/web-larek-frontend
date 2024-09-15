@@ -1,7 +1,7 @@
-import { AppEvents } from '../../types';
-import { IEvents } from '../base/events';
-import { createElement, ensureElement } from '../../utils/utils';
-import { Component } from '../base/component';
+import { AppEvents } from '../types';
+import { IEvents } from './base/events';
+import { createElement, ensureElement } from '../utils/utils';
+import { Component } from './base/component';
 
 interface IBasketView {
 	total: number;

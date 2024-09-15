@@ -1,12 +1,12 @@
 import { AppData, ProductsChangeEvent } from './components/data';
-import { AppApi } from './components/base/useapi';
+import { AppApi } from './components/base/AppApi';
 import { PageView } from './components/page';
 import {
 	ProductView,
 	ProductViewModal,
 	ProductInBasketView,
 } from './components/product';
-import { BasketView } from './components/common/basket';
+import { BasketView } from './components/basket';
 import { OrderForm } from './components/order';
 import { EventEmitter } from './components/base/events';
 import './scss/styles.scss';
@@ -14,8 +14,8 @@ import { AppEvents, IOrder, IProduct } from './types';
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate, createElement, ensureElement } from './utils/utils';
 import { Modal } from './components/common/modal';
-import { ContactsForm } from './components/common/contacts';
-import { OrderConfirmationView } from './components/common/orderconfirmation';
+import { ContactsForm } from './components/contacts';
+import { OrderConfirmationView } from './components/orderConfirmation';
 
 const events = new EventEmitter();
 const api = new AppApi(CDN_URL, API_URL);
@@ -55,12 +55,12 @@ const appData = new AppData({}, events, [], [], {
 
 const pageView = new PageView(document.body, events);
 
-api.getProducts()
-    .then(appData.setCatalog.bind(appData))
-    .catch(error => {
-        console.log(error);
-});
-
+api
+	.getProducts()
+	.then(appData.setCatalog.bind(appData))
+	.catch((error) => {
+		console.log(error);
+	});
 
 events.on<ProductsChangeEvent>(AppEvents.PRODUCTS_CHANGED, () => {
 	pageView.basketCounter = appData.getBasket().length;
@@ -223,8 +223,5 @@ events.on(/(^order|^contacts):submit/, () => {
 events.on(AppEvents.ORDER_CLEAR, () => {
 	appData.clearBasket();
 	appData.clearOrder();
-	orderForm.disableButtons();
 	contactsForm.clearForm();
 });
-
-
