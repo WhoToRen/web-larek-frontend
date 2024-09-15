@@ -1,27 +1,26 @@
-import { Api } from './api';
-import { IProductList, IOrder, IOrderResult, IProduct } from '../../types';
+import { Api, ApiListResponse } from './api';
+import { IOrder, IOrderResult, IProduct } from '../../types';
 
-export interface UseApi {
-	getProducts(): Promise<IProductList<IProduct>>;
-	createOrder(order: IOrder): Promise<IOrderResult>;
-}
-
-export class AppApi extends Api implements UseApi {
-    makeOrder(order: IOrder) {
-        throw new Error('Method not implemented.');
-    }
-	readonly cdn: string;
-
+export class AppApi extends Api {
+	cdn: string;
+	items: IProduct[];
+  
 	constructor(cdn: string, baseUrl: string, options?: RequestInit) {
-		super(baseUrl, options);
-		this.cdn = cdn;
+	  super(baseUrl, options);
+  
+	  this.cdn = cdn;
 	}
-
-	getProducts(): Promise<IProductList<IProduct>> {
-		return this.get('/product') as Promise<IProductList<IProduct>>;
+  
+	getProducts(): Promise<IProduct[]> {
+	  return this.get('/product').then((data: ApiListResponse<IProduct>) =>
+		data.items.map((item) => ({
+		  ...item,
+		  image: this.cdn + item.image,
+		}))
+	  );
 	}
 
 	createOrder(order: IOrder): Promise<IOrderResult> {
-		return this.post('/order', order) as Promise<IOrderResult>;
+	  return this.post(`/order`, order).then((data: IOrderResult) => data);
 	}
-}
+  }

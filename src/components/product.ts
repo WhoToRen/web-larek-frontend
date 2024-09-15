@@ -7,7 +7,7 @@ import { ensureElement } from '../utils/utils';
 import { Component } from './base/component';
 
 interface IProductActions {
-	onClick: (event: MouseEvent) => void;
+	onClick: (event: MouseEvent) => void; 
 }
 
 export class ProductView extends Component<IProductView> {

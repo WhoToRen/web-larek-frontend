@@ -55,12 +55,12 @@ const appData = new AppData({}, events, [], [], {
 
 const pageView = new PageView(document.body, events);
 
-api
-	.getProducts()
-	.then((data) => appData.setCatalog(data.items))
-	.catch((err) => {
-		console.error(err);
-	});
+api.getProducts()
+    .then(appData.setCatalog.bind(appData))
+    .catch(error => {
+        console.log(error);
+});
+
 
 events.on<ProductsChangeEvent>(AppEvents.PRODUCTS_CHANGED, () => {
 	pageView.basketCounter = appData.getBasket().length;
@@ -73,7 +73,7 @@ events.on<ProductsChangeEvent>(AppEvents.PRODUCTS_CHANGED, () => {
 		return product.render({
 			id: item.id,
 			title: item.title,
-			image: CDN_URL + item.image,
+			image: item.image,
 			category: item.category,
 			price: item.price ? `${item.price} синапсов` : 'Бесценно',
 		});
@@ -88,7 +88,7 @@ events.on(AppEvents.PRODUCT_PREVIEW, (product: IProduct) => {
 	modal.render({
 		content: card.render({
 			title: product.title,
-			image: CDN_URL + product.image,
+			image: product.image,
 			category: product.category,
 			description: product.description,
 			price: product.price ? `${product.price} синапсов` : '',
@@ -102,6 +102,8 @@ events.on(AppEvents.PRODUCT_PREVIEW, (product: IProduct) => {
 events.on(AppEvents.MODAL_OPEN, () => {
 	pageView.locked = true;
 });
+
+// ... и разблокируем
 events.on(AppEvents.MODAL_CLOSE, () => {
 	pageView.locked = false;
 });
@@ -188,19 +190,6 @@ events.on(AppEvents.FORM_ERRORS_CHANGED, (errors: Partial<IOrder>) => {
 		.join(', ');
 });
 
-events.on(AppEvents.FORM_ERRORS_CHANGED, (errors: Partial<IOrder>) => {
-	const { email, phone, address, payment } = errors;
-	orderForm.valid = !address && !payment;
-	orderForm.errors = Object.values(errors)
-		.filter((i) => !!i)
-		.join(', ');
-
-	contactsForm.valid = !email && !phone;
-	contactsForm.errors = Object.values(errors)
-		.filter((i) => !!i)
-		.join(', ');
-});
-
 events.on(/(^order|^contacts):submit/, () => {
 	if (
 		!appData.getOrder().email ||
@@ -238,11 +227,4 @@ events.on(AppEvents.ORDER_CLEAR, () => {
 	contactsForm.clearForm();
 });
 
-events.on('MODAL_OPEN', () => {
-	pageView.locked = true;
-});
 
-// ... и разблокируем
-events.on('MODAL_CLOSE', () => {
-	pageView.locked = false;
-});

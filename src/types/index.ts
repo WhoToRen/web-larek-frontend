@@ -1,7 +1,10 @@
-// типы
 export type orderUserData = Pick<IOrder, 'email' | 'phone'>;
 export type orderDelivery = Pick<IOrder, 'payment' | 'address'>;
 export type paymentMethod = 'online' | 'cash';
+export type IBasketView = Pick<IProduct, 'id' | 'title' | 'price'>;
+export type ListItem = {
+	index: number;
+};
 
 export interface IPage {
 	basketCounter: number;
@@ -39,11 +42,6 @@ export type FormErrors = {
 	payment?: string;
 };
 
-export interface IProductList<T> {
-	items: T[];
-	total: number;
-}
-
 export interface IAppData {
 	catalog: IProduct[];
 	basket: IProduct[];
@@ -68,10 +66,6 @@ export interface IOrderResult {
 	message?: string;
 }
 
-export type ListItem = {
-	index: number;
-};
-
 export interface IProductView {
 	id: string;
 	description: string;
@@ -82,8 +76,6 @@ export interface IProductView {
 	button: string;
 	status: boolean;
 }
-
-export type IBasketView = Pick<IProduct, 'id' | 'title' | 'price'>;
 
 export enum AppEvents {
 	MODAL_OPEN = 'modal:open',
