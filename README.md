@@ -354,6 +354,11 @@ _address: HTMLInputElement - для установки адреса
 
 **Конструктор:** constructor(cdn: string, baseUrl: string, options?: RequestInit)
 
+**Свойства:**
+
+- cdn: string - изображение
+- items: IProduct[] - товар
+
 **Методы:**
 
 - getProducts(): Promise<IProductList<IProduct>> - получить каталог товаров 
@@ -514,7 +519,6 @@ interface IProductView {
 export type orderUserData = Pick<IOrder, 'email' | 'phone'>;
 export type orderDelivery = Pick<IOrder, 'payment' | 'address'>;
 export type paymentMethod = 'online' | 'cash'; 
-export type ListItem = { index: number };
 export type IBasketView = Pick<IProduct, 'id' | 'title' | 'price'>;
 
 ```
